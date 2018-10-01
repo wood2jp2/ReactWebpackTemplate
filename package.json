@@ -1,0 +1,15 @@
+{
+  "name": "reactwebpacktemplate",
+  "version": "1.0.0",
+  "description": "template engine for React / webpack projects with Node",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "JPW",
+  "license": "ISC",
+  "dependencies": {
+    "babel-preset-env": "^1.5.2",
+    "babel-preset-react": "^6.24.1"
+  }
+}

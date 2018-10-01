@@ -1,0 +1,13 @@
+1. Create an index.html file within a 'public' folder.
+2. Ensure that 'babel-cli@6.24.1', and 'live-server' are installed globally using command 'npm install -g [package]'
+3. Hook up React using one of two ways:
+    a. Add the following script tags to the HTML file:
+            <script src="https://unpkg.com/react@16.0.0/umd/react.development.js"></script>
+            <script src="https://unpkg.com/react-dom@16.0.0/umd/react-dom.development.js"></script>
+4. Run 'npm init' so that we can start tracking our node packages with a package.json file.
+    Run: 'npm install --save babel-preset-react@6.24.1 babel-preset-env@1.5.2' which turns our React code down to ES5 code.
+5. Make an 'src'
+6. Run 'babel src/app.js --out-file=public/scripts/app.js --presets=env,react' so that our 'app.js' file in our scripts folder
+    is compiled down to ES5 code for us using Babel.
+    You can add '--watch' to the end of the above command to keep a live watch and app.js file regeneration going.
+7. Running 'live-server' is used to keep the web server alive and looking / refreshing any changes made.
