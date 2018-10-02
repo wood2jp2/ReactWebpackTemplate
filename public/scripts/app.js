@@ -1,42 +1,78 @@
-"use strict";
+'use strict';
 
 console.log("App.js is running!");
 
+var app = {
+    header: 'React Template with WebPack',
+    subtitle: 'Built upon Node, Babel, and including SCSS',
+    options: ['one', 'two', 'three']
+},
+    user = {
+    name: 'Josh',
+    age: 25,
+    location: 'Arlington'
+};
 var template = React.createElement(
-    "div",
+    'div',
     null,
     React.createElement(
-        "h1",
+        'h1',
         null,
-        "This is a header"
+        app.header
+    ),
+    app.subtitle && React.createElement(
+        'h4',
+        null,
+        app.subtitle
     ),
     React.createElement(
-        "p",
+        'p',
         null,
-        "hey."
+        app.options.length > 0 ? 'Here are your options' : 'There are no options'
+    ),
+    React.createElement(
+        'ol',
+        null,
+        app.options.length > 0 && app.options.map(function (option, i) {
+            return React.createElement(
+                'li',
+                { key: i },
+                option
+            );
+        })
     )
 );
 
+var checkForLocation = function checkForLocation(location) {
+    return location ? React.createElement(
+        'p',
+        null,
+        'Location: ',
+        location
+    ) : React.createElement(
+        'p',
+        null,
+        'Location: Unknown'
+    );
+};
+// Three ways to render: Ternary, logical and operator, function returning JSX
 var templateTwo = React.createElement(
-    "div",
+    'div',
     null,
     React.createElement(
-        "h1",
+        'h1',
         null,
-        "Josh's Template"
+        user.name ? user.name : 'Anonymous',
+        '\'s Template'
     ),
-    React.createElement(
-        "p",
+    user.age > 18 && React.createElement(
+        'p',
         null,
-        "25"
+        user.age
     ),
-    React.createElement(
-        "p",
-        null,
-        "Location: Arlington"
-    )
+    checkForLocation(user.location)
 );
 
 var appRoot = document.getElementById('app');
 
-ReactDOM.render(templateTwo, appRoot);
+ReactDOM.render(template, appRoot);
