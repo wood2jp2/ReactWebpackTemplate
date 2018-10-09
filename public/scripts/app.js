@@ -2,17 +2,34 @@
 
 console.log("App.js is running!");
 
+var getFirstName = function getFirstName(fullName) {
+    return fullName.split(' ')[0];
+},
+    checkForLocation = function checkForLocation(location) {
+    return location ? React.createElement(
+        'p',
+        null,
+        'Location: ',
+        location
+    ) : React.createElement(
+        'p',
+        null,
+        'Location: Unknown'
+    );
+},
+    appRoot = document.getElementById('app');
+
 var app = {
     header: 'React Template with WebPack',
     subtitle: 'Built upon Node, Babel, and including SCSS',
     options: ['one', 'two', 'three']
 },
     user = {
-    name: 'Josh',
+    name: 'Josh Wood',
     age: 25,
     location: 'Arlington'
-};
-var template = React.createElement(
+},
+    template = React.createElement(
     'div',
     null,
     React.createElement(
@@ -41,28 +58,16 @@ var template = React.createElement(
             );
         })
     )
-);
+),
 
-var checkForLocation = function checkForLocation(location) {
-    return location ? React.createElement(
-        'p',
-        null,
-        'Location: ',
-        location
-    ) : React.createElement(
-        'p',
-        null,
-        'Location: Unknown'
-    );
-};
 // Three ways to render: Ternary, logical and operator, function returning JSX
-var templateTwo = React.createElement(
+templateTwo = React.createElement(
     'div',
     null,
     React.createElement(
         'h1',
         null,
-        user.name ? user.name : 'Anonymous',
+        user.name ? getFirstName(user.name) : 'Anonymous',
         '\'s Template'
     ),
     user.age > 18 && React.createElement(
@@ -73,6 +78,4 @@ var templateTwo = React.createElement(
     checkForLocation(user.location)
 );
 
-var appRoot = document.getElementById('app');
-
-ReactDOM.render(template, appRoot);
+ReactDOM.render(templateTwo, appRoot);
