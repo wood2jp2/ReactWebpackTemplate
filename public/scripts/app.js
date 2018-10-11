@@ -1,6 +1,9 @@
 'use strict';
 
 console.log("App.js is running!");
+// import Clicker from '../Components/Clicker';
+var count = 0,
+    counter = void 0;
 
 var getFirstName = function getFirstName(fullName) {
     return fullName.split(' ')[0];
@@ -17,9 +20,8 @@ var getFirstName = function getFirstName(fullName) {
         'Location: Unknown'
     );
 },
-    appRoot = document.getElementById('app');
-
-var app = {
+    appRoot = document.getElementById('app'),
+    app = {
     header: 'React Template with WebPack',
     subtitle: 'Built upon Node, Babel, and including SCSS',
     options: ['one', 'two', 'three']
@@ -28,6 +30,69 @@ var app = {
     name: 'Josh Wood',
     age: 25,
     location: 'Arlington'
+},
+
+// Three ways to render: Ternary, logical and operator, function returning JSX
+templateTwo = React.createElement(
+    'div',
+    null,
+    React.createElement(
+        'h1',
+        null,
+        user.name ? getFirstName(user.name) : 'Anonymous',
+        '\'s Template'
+    ),
+    user.age > 18 && React.createElement(
+        'p',
+        null,
+        user.age
+    ),
+    checkForLocation(user.location),
+    counter
+),
+    loadOrReloadDOM = function loadOrReloadDOM() {
+    counter = React.createElement(
+        'div',
+        null,
+        React.createElement(
+            'p',
+            null,
+            count
+        ),
+        React.createElement(
+            'button',
+            {
+                // make sure you pass the function event 'e' to the function to have access to the event
+                onClick: function onClick(e) {
+                    return iterate(e);
+                },
+                id: 'addButton' },
+            'Add One'
+        ),
+        React.createElement(
+            'button',
+            {
+                onClick: function onClick(e) {
+                    return iterate(e);
+                },
+                id: 'subtractButton' },
+            'Subtract One'
+        ),
+        React.createElement(
+            'button',
+            {
+                onClick: function onClick(e) {
+                    return iterate(e);
+                },
+                id: 'resetButton' },
+            'Reset'
+        )
+    );
+    ReactDOM.render(counter, appRoot);
+},
+    iterate = function iterate(e) {
+    e.target.id === "addButton" ? count += 1 : e.target.id === "subtractButton" ? count -= 1 : count = 0;
+    loadOrReloadDOM();
 },
     template = React.createElement(
     'div',
@@ -58,24 +123,6 @@ var app = {
             );
         })
     )
-),
-
-// Three ways to render: Ternary, logical and operator, function returning JSX
-templateTwo = React.createElement(
-    'div',
-    null,
-    React.createElement(
-        'h1',
-        null,
-        user.name ? getFirstName(user.name) : 'Anonymous',
-        '\'s Template'
-    ),
-    user.age > 18 && React.createElement(
-        'p',
-        null,
-        user.age
-    ),
-    checkForLocation(user.location)
 );
 
-ReactDOM.render(templateTwo, appRoot);
+loadOrReloadDOM();
