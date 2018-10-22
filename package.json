@@ -2,9 +2,10 @@
   "name": "reactwebpacktemplate",
   "version": "1.0.0",
   "description": "template engine for React / webpack projects with Node",
-  "main": "index.js",
+  "main": "./src/app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "push": "git add && git commit -m 'added class stuff' && git push"
   },
   "author": "JPW",
   "license": "ISC",
