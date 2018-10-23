@@ -1,108 +1,114 @@
-console.log("App.js is running!")
-// import Clicker from '../Components/Clicker';
-let count = 0
+const app = document.getElementById('app')
 
-const makeAdecision = () => {
-    let randomNumber = Math.floor(Math.random()*app.options.length)
-    let decision = app.options[randomNumber]
-    console.log(decision)
-    removeAll()
-    render()
-}
 
-const 
-    getFirstName = fullName => fullName.split(' ')[0],
-    checkForLocation = location => location ? <p>Location: {location}</p> : <p>Location: Unknown</p>,
-    appRoot = document.getElementById('app'),
-    app = {
-        header: 'React Template with WebPack',
-        subtitle: 'Built upon Node, Babel, and including SCSS',
-        options: []
-    },
-    user = {
-        name: 'Josh Wood',
-        age: 25,
-        location: 'Arlington'
-    },
-    addOption = e => {
-        e.preventDefault()
-        let option = e.target.option.value
-        app.options.push(option)
-        e.target.option.value = ""
-        render()
-    },
-    removeAll = () => {
-        app.options = []
-        render()
-    },
-    render = () => {
-        // let counter = (
-        //     <div>
-        //     <p>{count}</p>
-        //     <button
-        //         // make sure you pass the function event 'e' to the function to have access to the event
-        //         onClick={e => iterate(e)}
-        //         id="addButton">Add One</button> 
-        //     <button 
-        //         onClick={e => iterate(e)}
-        //         id="subtractButton">Subtract One</button> 
-        //     <button
-        //         onClick={e => iterate(e)}
-        //         id="resetButton">Reset</button>
-        //     </div>
-        // ),    // Three ways to render: Ternary, logical and operator, function returning JSX
-        // templateTwo = (
-        //     <div>
-        //         <h1>{user.name ? getFirstName(user.name) : 'Anonymous'}'s Template</h1>
-        //         {
-        //             user.age > 18 &&
-        //             <p>{user.age}</p>
-        //         }
-        //         {checkForLocation(user.location)}
-        //         {counter}
-        //         {/* <Clicker /> */}
-        //     </div>
-        // );
-        
-        let template = (
+
+class Header extends React.Component {
+    // MUST define a render() method for all React components.
+    render() {
+        return (
             <div>
-                <h1>{app.header}</h1>
-                {app.subtitle && <h4>{app.subtitle}</h4>}
-                <p>{app.options.length > 0 ? 'Here are your options' : 'There are no options'}</p>
-                <ol>
-                {
-                    app.options.length > 0 && app.options.map( (option, i) => <li key={i}>{option}</li>)
-                }
-                </ol>
-                <form onSubmit={addOption}>
-                {/* Giving the input a 'name' allows you to access the value with the e.target.option.value call. */}
-                    <input type="text" name="option">
-
-                    </input>
-                    <button>Add Option</button>
-                </form>
-                <button onClick={removeAll}>Remove All Options</button>
-                <button disabled={app.options.length === 0} onClick={makeAdecision}>What should I do?</button>
+                <h1>Indecision</h1>
+                <h2>Place your life in the hands of a computer</h2>
             </div>
         )
-        ReactDOM.render(template, appRoot)
-    };
-    // },
-    // iterate = e => {
-    //     e.target.id === "addButton" ? count += 1 : e.target.id === "subtractButton" ? count -= 1 : count = 0
-    //     loadOrReloadDOM()
-    // };
-
-class Car {
-    constructor(make, model, age) {
-        this.make = make
-        this.model = model
-        this.age = age
-    }
-
-    getCarDescription() {
-        return `My ${this.make} is a ${this.model} that is ${this.age} years old`
     }
 }
+
+class Action extends React.Component {
+
+    ChooseOption() {
+        console.log("choosing random option")
+    }
     
-render()
+    render() {
+        return (
+            <div>
+                <button onClick={this.ChooseOption}>What should I do?</button>
+            </div>
+        )
+    }
+}
+
+
+
+class Option extends React.Component {
+    
+    constructor(props) {
+        super(props)
+        this.state = {
+            text: props.text
+        }
+    }
+
+    render() {
+        return (
+            <p>{this.state.text}</p>
+        )
+    }
+}
+
+class AddOption extends React.Component {
+
+    constructor(props) {
+        super(props)
+    }
+
+    AddOptionToList(e) {
+        e.preventDefault()
+        let option = e.target.addOptionForm.value
+        this.props.addOption(option)
+        e.target.addOptionForm.value = ''
+    }
+
+    render() {
+        return (
+            <div>
+                <form onSubmit={e => this.AddOptionToList(e)}>
+                    <input name="addOptionForm"></input>
+                    <button>Add Option</button>
+                </form>
+            </div>
+        )
+    }
+}
+
+class Options extends React.Component {
+    constructor() {
+        super()
+        this.state = {
+            options: []
+        }
+    }
+
+    RetrieveAddedOption(option) {
+        this.setState(state => {
+            console.log(state)
+        })
+    }
+    
+    render() {
+        return (
+            <div>
+            
+                {this.state.options.length > 0 && this.state.options.map(opt => 
+                    <Option text={opt} />
+                ) || <p>There are no options to display.</p>}
+                <AddOption addOption={e => this.RetrieveAddedOption(e)}/>
+            </div>
+        )
+    }
+}
+
+class Indecision extends React.Component {
+    render() {
+        return (
+            <div>
+                <Header />
+                <Action />
+                <Options />
+            </div>
+        )
+    }
+}
+
+ReactDOM.render(<Indecision />, app)

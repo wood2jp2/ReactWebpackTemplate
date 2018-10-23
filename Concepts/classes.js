@@ -1,3 +1,15 @@
+class Car {
+    constructor(make, model, age) {
+        this.make = make
+        this.model = model
+        this.age = age
+    }
+
+    getCarDescription() {
+        return `My ${this.make} is a ${this.model} that is ${this.age} years old`
+    }
+}
+
 const Mazda = new Car('Mazda', '626', 18)
 class Truck extends Car {
     // you can set default args like normal
