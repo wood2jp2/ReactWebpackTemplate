@@ -1,22 +1,20 @@
 const app = document.getElementById('app')
 
-
-
-class Header extends React.Component {
-    // MUST define a render() method for all React components.
-    render() {
-        return (
+// Implicitly returned components can still use a return statement, and perform any desired calculations above that.
+const Header = props => 
+        (
             <div>
-                <h1>Indecision</h1>
-                <h2>Place your life in the hands of a computer</h2>
+                <h1>{props.title}</h1>
+                <h2>{props.subtitle}</h2>
             </div>
         )
-    }
-}
 
+const Option = props => <p>{props.text}</p>
+
+// all class-based components require a render() method.
 class Action extends React.Component {
 
-    ChooseOption() {
+    HandlePick() {
         console.log("choosing random option")
     }
     
@@ -29,33 +27,10 @@ class Action extends React.Component {
     }
 }
 
-
-
-class Option extends React.Component {
-    
-    constructor(props) {
-        super(props)
-        this.state = {
-            text: props.text
-        }
-    }
-
-    render() {
-        return (
-            <p>{this.state.text}</p>
-        )
-    }
-}
-
 class AddOption extends React.Component {
-
-    constructor(props) {
-        super(props)
-    }
-
-    AddOptionToList(e) {
+    handleAddOption(e) {
         e.preventDefault()
-        let option = e.target.addOptionForm.value
+        let option = e.target.addOptionForm.value.trim()
         this.props.addOption(option)
         e.target.addOptionForm.value = ''
     }
@@ -63,7 +38,7 @@ class AddOption extends React.Component {
     render() {
         return (
             <div>
-                <form onSubmit={e => this.AddOptionToList(e)}>
+                <form onSubmit={this.handleAddOption}>
                     <input name="addOptionForm"></input>
                     <button>Add Option</button>
                 </form>
@@ -78,22 +53,31 @@ class Options extends React.Component {
         this.state = {
             options: []
         }
+        this.RemoveAll = this.RemoveAll.bind(this)
     }
 
-    RetrieveAddedOption(option) {
-        this.setState(state => {
-            console.log(state)
+    RemoveAll() {
+        this.setState({
+            options: []
         })
+    }
+    
+    RetrieveAddedOption(option) {
+        this.setState({options: [...this.state.options, option]})
     }
     
     render() {
         return (
             <div>
-            
-                {this.state.options.length > 0 && this.state.options.map(opt => 
-                    <Option text={opt} />
-                ) || <p>There are no options to display.</p>}
+                {/* Key is a special reserved name value, inaccessible by props. */}
+                {this.state.options.length > 0 && this.state.options.map(
+                    (opt, i) => 
+                        <Option text={opt} key={i}/>
+                    ) 
+                    || 
+                    <p>There are no options to display.</p>}
                 <AddOption addOption={e => this.RetrieveAddedOption(e)}/>
+                <button onClick={this.RemoveAll}>Remove All</button>
             </div>
         )
     }
@@ -101,9 +85,14 @@ class Options extends React.Component {
 
 class Indecision extends React.Component {
     render() {
+        const 
+            title = 'Indecision', 
+            subtitle = 'Place your life in the hands of a computer', 
+            options = ['Thing One', 'Thing Two', 'Thing Five'];
+
         return (
             <div>
-                <Header />
+                <Header title={title} subtitle={subtitle} />
                 <Action />
                 <Options />
             </div>
