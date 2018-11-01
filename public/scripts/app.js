@@ -82,8 +82,8 @@ var AddOption = function (_React$Component2) {
     }
 
     _createClass(AddOption, [{
-        key: 'handleAddOption',
-        value: function handleAddOption(e) {
+        key: 'HandleAddOption',
+        value: function HandleAddOption(e) {
             e.preventDefault();
             var option = e.target.addOptionForm.value.trim();
             this.props.addOption(option);
@@ -97,7 +97,7 @@ var AddOption = function (_React$Component2) {
                 null,
                 React.createElement(
                     'form',
-                    { onSubmit: this.handleAddOption },
+                    { onSubmit: this.HandleAddOption },
                     React.createElement('input', { name: 'addOptionForm' }),
                     React.createElement(
                         'button',
@@ -123,13 +123,13 @@ var Options = function (_React$Component3) {
         _this3.state = {
             options: []
         };
-        _this3.RemoveAll = _this3.RemoveAll.bind(_this3);
+        _this3.handleRemoveAll = _this3.handleRemoveAll.bind(_this3);
         return _this3;
     }
 
     _createClass(Options, [{
-        key: 'RemoveAll',
-        value: function RemoveAll() {
+        key: 'handleRemoveAll',
+        value: function handleRemoveAll() {
             this.setState({
                 options: []
             });
@@ -159,7 +159,7 @@ var Options = function (_React$Component3) {
                     } }),
                 React.createElement(
                     'button',
-                    { onClick: this.RemoveAll },
+                    { onClick: this.handleRemoveAll },
                     'Remove All'
                 )
             );

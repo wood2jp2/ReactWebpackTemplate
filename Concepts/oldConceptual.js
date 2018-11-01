@@ -93,6 +93,4 @@ const
     //     loadOrReloadDOM()
     // };
 
-
-    
 render()

@@ -28,7 +28,7 @@ class Action extends React.Component {
 }
 
 class AddOption extends React.Component {
-    handleAddOption(e) {
+    HandleAddOption(e) {
         e.preventDefault()
         let option = e.target.addOptionForm.value.trim()
         this.props.addOption(option)
@@ -38,7 +38,7 @@ class AddOption extends React.Component {
     render() {
         return (
             <div>
-                <form onSubmit={this.handleAddOption}>
+                <form onSubmit={this.HandleAddOption}>
                     <input name="addOptionForm"></input>
                     <button>Add Option</button>
                 </form>
@@ -53,10 +53,10 @@ class Options extends React.Component {
         this.state = {
             options: []
         }
-        this.RemoveAll = this.RemoveAll.bind(this)
+        this.handleRemoveAll = this.handleRemoveAll.bind(this)
     }
 
-    RemoveAll() {
+    handleRemoveAll() {
         this.setState({
             options: []
         })
@@ -77,7 +77,7 @@ class Options extends React.Component {
                     || 
                     <p>There are no options to display.</p>}
                 <AddOption addOption={e => this.RetrieveAddedOption(e)}/>
-                <button onClick={this.RemoveAll}>Remove All</button>
+                <button onClick={this.handleRemoveAll}>Remove All</button>
             </div>
         )
     }
