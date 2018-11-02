@@ -94,3 +94,25 @@ const
     // };
 
 render()
+
+// state
+// changes with the following
+
+this.setState(() => {
+    return {
+        stateKeyToChange: reassignVal
+    }
+})
+
+// if you need to access a value in the state and manipulate to a new value based off of that...
+// pass in previous state
+// Remember: setState UPDATES state, does NOT replace it.
+this.setState(prevState => {
+    return {
+        stateKeyToChange: prevState.reassignVal++
+    }
+})
+
+// shorthand
+
+this.setState(prevState => ({stateKeyToChange: prevState.reassignVal++}))
