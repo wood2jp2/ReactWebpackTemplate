@@ -107,6 +107,7 @@ this.setState(() => {
 // if you need to access a value in the state and manipulate to a new value based off of that...
 // pass in previous state
 // Remember: setState UPDATES state, does NOT replace it.
+// this.setState is different from manually (directly) changing the state, because it forces a re-render of the component
 this.setState(prevState => {
     return {
         stateKeyToChange: prevState.reassignVal++
