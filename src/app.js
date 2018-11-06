@@ -7,7 +7,7 @@ class Indecision extends React.Component {
         this.state = {
             title: 'Indecision',
             subtitle: 'Place your life in the hands of a computer', 
-            options: []
+            options: props.options
         }
 
         this.handleAddOption = this.handleAddOption.bind(this)
@@ -17,18 +17,20 @@ class Indecision extends React.Component {
     }
     
     handleAddOption(option) {
-        this.setState({options: [...this.state.options, option]})
+        if (!option) {
+            return 'Please provide an option to add'
+        } else if (this.state.options.includes(option)) {
+            return 'You already are tracking this option!'
+        }
+        
+        this.setState(prevState => ({options: [...prevState.options, option]}))
     }
 
-    handleDeleteOption(option) {
-        console.log(option)
-        this.setState(prevState => {
-            options: prevState.options.filter((x, i) => {
-                if (i !== option) {
-                    return x
-                }
-            })
-        })
+    handleDeleteOption(optionToRemove) {
+        console.log(optionToRemove)
+        this.setState(prevState => ({
+            options: prevState.options.filter(opt => opt !== optionToRemove)
+        }))
     }
 
     handleDeleteOptions() {
@@ -39,13 +41,63 @@ class Indecision extends React.Component {
         let randomPick = Math.floor(this.state.options.length * Math.random())
         alert(this.state.options[randomPick])
     }
+
+    // Lifecycle methods only usable on class-based components
+
+    // fires after component is rendered on page
+    // fetch data here
+    componentDidMount(prevProps, prevState) {
+        try {
+            const options = JSON.parse(localStorage.getItem('options'))
+
+            if (options) {
+                this.setState(() => ({options}))
+            }
+        }
+        catch (e) {
+
+        }
+    }
+
+    // fires before component is rendered on page
+    componentWillMount() {
+        console.log('will mount')
+    }
+
+    //
+    // shouldComponentUpdate() {
+    //     console.log('should component update')
+    // }
+
+    // fires before state or props values change.
+    componentWillUpdate() {
+        console.log('updated')
+    }
+    
+    // fires after state or props values change. Arguments are as follows.
+    // save data here
+    componentDidUpdate(prevProps, prevState) {
+        if (this.state.options.length !== prevState.options.length) {
+            const json = JSON.stringify(this.state.options)
+            console.log('saving data')
+            localStorage.setItem('options', json)
+        }
+    }
+
+    // fires when a component disappears
+    componentWillUnmount() {
+        console.log('component will unmount')
+    }
+
+    // fires as a component is about to receive props
+    componentWillReceiveProps() {
+        console.log('component will receive props')
+    }
     
     render() {
         return (
             <div>
-                <Header 
-                    title={this.state.title} 
-                    subtitle={this.state.subtitle} />
+                <Header />
                 <Action 
                     hasOptions={this.state.options.length > 0}
                     handlePick={this.handlePick}
@@ -53,7 +105,7 @@ class Indecision extends React.Component {
                 <Options 
                     options={this.state.options}
                     handleDeleteOptions={this.handleDeleteOptions}
-                    handleDeleteOption={e => this.handleDeleteOption(e)} />
+                    handleDeleteOption={this.handleDeleteOption} />
                 <AddOption 
                     handleAddOption={this.handleAddOption} />
             </div>
@@ -61,53 +113,67 @@ class Indecision extends React.Component {
     }
 }
 
+Indecision.defaultProps = {
+    options: []
+}
+
 // Implicitly returned components can still use a return statement, and perform any desired calculations above that.
 const Header = props => 
-        (
-            <div>
-                <h1>{props.title}</h1>
-                <h2>{props.subtitle}</h2>
-            </div>
-        )
+(
+    <div>
+        <h1>{props.title}</h1>
+        {props.subtitle && <h2>{props.subtitle}</h2>}
+    </div>
+)
+
+// these are similar to default args in functions, and take the place if the props are not defined at component mount.
+Header.defaultProps = {
+    title: 'Indecision'
+}
 
 const Option = props => (
     <div>
-        <p>{props.text}</p>
-        <button index={props.index} onClick={e=> props.handleDeleteOption(e)}>Delete</button>
+        {props.text}
+        <button index={props.index} onClick={e => props.handleDeleteOption(props.text)}>remove</button>
     </div>
 )
 // all class-based components require a render() method.
-class Action extends React.Component {    
-    render() {
-        return (
-            <div>
-                <button 
-                    disabled={!this.props.hasOptions}
-                    onClick={this.props.handlePick}
-                >What should I do?</button>
-            </div>
+const Action = props => (
+    <div>
+        <button 
+            disabled={!props.hasOptions}
+            onClick={props.handlePick}
+        >What should I do?</button>
+    </div>
 
-        )
-    }
-}
+)
 
 class AddOption extends React.Component {
     constructor(props) {
         super(props)
-        this.HandleAddOption = this.HandleAddOption.bind(this)
+        this.handleAddOption = this.handleAddOption.bind(this)
+        this.state = {
+            error: undefined
+        }
     }
 
-    HandleAddOption(e) {
+    handleAddOption(e) {
         e.preventDefault()
+        this.setState(() => ({error: undefined}))
         let option = e.target.addOptionForm.value.trim()
-        this.props.handleAddOption(option)
-        e.target.addOptionForm.value = ''
+        const error = this.props.handleAddOption(option)
+        this.setState(() => ({error}))
+
+        if (this.state.error !== undefined) {
+            e.target.addOptionForm.value = ''
+        }
     }
 
     render() {
         return (
             <div>
-                <form onSubmit={e => this.HandleAddOption(e)}>
+                {this.state.error && <p>{this.state.error}</p>}
+                <form onSubmit={e => this.handleAddOption(e)}>
                     <input name="addOptionForm"></input>
                     <button>Add Option</button>
                 </form>
@@ -116,28 +182,25 @@ class AddOption extends React.Component {
     }
 }
 
-class Options extends React.Component {
-
-    render() {
-        return (
-            <div>
-                {/* Key is a special reserved name value, inaccessible by props. */}
-                {this.props.options.length > 0 ? this.props.options.map(
-                    (opt, i) => 
-                        <Option index={i} handleDeleteOption={e => this.HandleDeleteOption(e)} text={opt} key={i}/>
-                    ) 
-                    :
-                    <p>There are no options to display.</p>}
-                <button 
-                    onClick={this.props.handleDeleteOptions}
-                    disabled={!this.props.options.length > 0}>
-                        Remove All
-                </button>
-                    
-            </div>
-        )
-    }
-}
-
+const Options = props => (
+    <div>
+        {/* Key is a special reserved name value, inaccessible by props. */}
+        {props.options.length > 0 ? props.options.map(
+            (opt, i) => 
+                <Option 
+                    index={i} 
+                    handleDeleteOption={props.handleDeleteOption} 
+                    text={opt} 
+                    key={i}/>
+            ) 
+            :
+            <p>There are no options to display.</p>}
+        <button 
+            onClick={props.handleDeleteOptions}
+            disabled={!props.options.length > 0}>
+                Remove All
+        </button>
+    </div>
+)
 
 ReactDOM.render(<Indecision />, app)
