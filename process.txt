@@ -18,3 +18,9 @@ Re-rendering JSX on events (user data change).
         1. The web page is first fully loaded
         2. When a user event changes values and the code needs to be rendered to reflect the change.
         + This function will also assign (re-assign) the value(s) of the components that encase the value that changed. Call ReactDOM.render([componentThatChanged], appRoot) at the end.
+
+Automating running babel-cli and live-server
+    - Run the following to uninstall: 'npm uninstall -g live-server babel-cli'
+    - Add the packages manually with 'npm install babel-cli@6.24.1 live-server'
+        + This adds them to package.json
+    - THEN define these scripts within the 'scripts' section in package.json (naming them whatever you like)

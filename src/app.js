@@ -5,7 +5,7 @@ class Indecision extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            title: 'Indecision',
+            title: 'sadfsadf',
             subtitle: 'Place your life in the hands of a computer', 
             options: props.options
         }
@@ -97,7 +97,9 @@ class Indecision extends React.Component {
     render() {
         return (
             <div>
-                <Header />
+                <Header 
+                    title={this.state.title} 
+                    subtitle={this.state.subtitle}/>
                 <Action 
                     hasOptions={this.state.options.length > 0}
                     handlePick={this.handlePick}
