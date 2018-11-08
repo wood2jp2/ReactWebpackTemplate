@@ -38,8 +38,8 @@ class Indecision extends React.Component {
     }
 
     handlePick() {
-        let randomPick = Math.floor(this.state.options.length * Math.random())
-        alert(this.state.options[randomPick])
+        let randomOption = Math.floor(this.state.options.length * Math.random())
+        alert(this.state.options[randomOption])
     }
 
     // Lifecycle methods only usable on class-based components
@@ -157,16 +157,20 @@ class AddOption extends React.Component {
         }
     }
 
-    handleAddOption(e) {
-        e.preventDefault()
-        this.setState(() => ({error: undefined}))
-        let option = e.target.addOptionForm.value.trim()
-        const error = this.props.handleAddOption(option)
-        this.setState(() => ({error}))
-
-        if (this.state.error !== undefined) {
+    clearOrPersistInput(e, option) {
+        if (this.state.error === undefined) {
             e.target.addOptionForm.value = ''
         }
+    }
+
+    handleAddOption(e) {
+        e.preventDefault()
+        let option = e.target.addOptionForm.value.trim()
+        const error = this.props.handleAddOption(option)
+        e.persist()
+        this.setState(() => ({error}), () => {
+            this.clearOrPersistInput(e)
+        })
     }
 
     render() {
