@@ -21,6 +21,7 @@ Re-rendering JSX on events (user data change).
 
 Automating running babel-cli and live-server
     - Run the following to uninstall: 'npm uninstall -g live-server babel-cli'
+        + AVOID Global modules.
     - Add the packages manually with 'npm install babel-cli@6.24.1 live-server'
         + This adds them to package.json
     - THEN define these scripts within the 'scripts' section in package.json (naming them whatever you like)
