@@ -21,7 +21,7 @@ var Indecision = function (_React$Component) {
         var _this = _possibleConstructorReturn(this, (Indecision.__proto__ || Object.getPrototypeOf(Indecision)).call(this, props));
 
         _this.state = {
-            title: 'Indecision',
+            title: 'sadfsadf',
             subtitle: 'Place your life in the hands of a computer',
             options: props.options
         };
@@ -146,7 +146,9 @@ var Indecision = function (_React$Component) {
             return React.createElement(
                 'div',
                 null,
-                React.createElement(Header, null),
+                React.createElement(Header, {
+                    title: this.state.title,
+                    subtitle: this.state.subtitle }),
                 React.createElement(Action, {
                     hasOptions: this.state.options.length > 0,
                     handlePick: this.handlePick
