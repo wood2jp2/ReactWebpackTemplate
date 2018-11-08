@@ -36,7 +36,14 @@ Adding webpack
 
 Exporting and Importing
     - Should now be available
-    - export {namedExport1, namedExport2} => for multiple exports
-        + In the importing file, 'import {namedExport1, namedExport2} from './pathToFile.js'
+    - export {namedExport1, namedExport2, export3 as default} => for multiple exports
+        + In the importing file, 'import export3, {namedExport1, namedExport2} from './pathToFile.js'
+        + In the case of defaults, you can name them anything you want on import.
     - for singular exports: export default functionName
         + In the importing file, 'import functionName from './pathToFile.js'
+
+Using Babel to incorporate (convert) JSX to React  
+    - run 'npm install babel-core@6.25.0 babel-loader@7.1.1 --save'
+    - Then set up the module part of webpack => rules array
+    - THEN you need a separate configuration file (.babelrc)
+        + This will tell babel what to do using its presets.

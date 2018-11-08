@@ -1,4 +1,7 @@
-import multiply from './utils.js'
+import React from 'react'
+import ReactDOM from 'react-dom'
+import Indecision from '../Components/Indecision'
 
-console.log('app.js is runnin')
-console.log(multiply(3,2))
+const app = document.getElementById('app')
+
+ReactDOM.render(<Indecision />, app)
