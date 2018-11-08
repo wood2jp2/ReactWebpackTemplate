@@ -24,3 +24,18 @@ Automating running babel-cli and live-server
     - Add the packages manually with 'npm install babel-cli@6.24.1 live-server'
         + This adds them to package.json
     - THEN define these scripts within the 'scripts' section in package.json (naming them whatever you like)
+
+Adding webpack
+    - Run 'npm install --save webpack@3.1.0'
+    - You will have to define in the webpack.config.js file where it's entry point is (usually app.js) and where to output (bundle.js)
+        + Use the path module built into node to join paths.
+        + designate where the bundle.js should populate (in the public folder)
+    - add the '--watch' tag to the webpack build script in package.json so that it automatically watches for changes.
+        + Remember, at this point you still need live-server (npm run serve) running when you run npm run build.
+
+Exporting and Importing
+    - Should now be available
+    - export {namedExport1, namedExport2} => for multiple exports
+        + In the importing file, 'import {namedExport1, namedExport2} from './pathToFile.js'
+    - for singular exports: export default functionName
+        + In the importing file, 'import functionName from './pathToFile.js'
