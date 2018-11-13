@@ -47,3 +47,11 @@ Using Babel to incorporate (convert) JSX to React
     - Then set up the module part of webpack => rules array
     - THEN you need a separate configuration file (.babelrc)
         + This will tell babel what to do using its presets.
+
+    - Using babel plugin transform-class-properties:
+        + run 'npm install --save babel-plugin-transform-class-properties'
+        + Add '"plugins": ["transform-class-properties"]' to the .babelrc file.
+        + This will allow you to use arrow functions on classes, which auto-binds 'this' to the particular instance of the
+            component.
+        + This also allows you to add defaultProps or propTypes fields as 'static' properties within the class.
+        + This also allows state to be defined without being called in a constructor.

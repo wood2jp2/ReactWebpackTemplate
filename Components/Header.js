@@ -1,17 +1,16 @@
 // Implicitly returned components can still use a return statement, and perform any desired calculations above that.
-import React from 'react'
+import React, {Component} from 'react'
 
-const Header = props => 
-(
-    <div>
-        <h1>{props.title}</h1>
-        {props.subtitle && <h2>{props.subtitle}</h2>}
-    </div>
-)
+export default class Header extends Component {
+    
+    static defaultProps = {
+        title: 'Indecision'
+    }
 
-// these are similar to default args in functions, and take the place if the props are not defined at component mount.
-Header.defaultProps = {
-    title: 'Indecision'
+    render = () => (
+        <div>
+            <h1>{this.props.title}</h1>
+            {this.props.subtitle && <h2>{this.props.subtitle}</h2>}
+        </div>
+    )
 }
-
-export default Header

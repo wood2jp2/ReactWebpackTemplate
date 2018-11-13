@@ -1,21 +1,18 @@
 import React, {Component} from 'react'
 
 export default class AddOption extends Component {
-    constructor(props) {
-        super(props)
-        this.handleAddOption = this.handleAddOption.bind(this)
-        this.state = {
-            error: undefined
-        }
+
+    state = {
+        error: undefined
     }
 
-    clearOrPersistInput(e, option) {
+    clearOrPersistInput = e => {
         if (this.state.error === undefined) {
             e.target.addOptionForm.value = ''
         }
     }
 
-    handleAddOption(e) {
+    handleAddOption = e => {
         e.preventDefault()
         let option = e.target.addOptionForm.value.trim()
         const error = this.props.handleAddOption(option)
@@ -25,15 +22,13 @@ export default class AddOption extends Component {
         })
     }
 
-    render() {
-        return (
-            <div>
-                {this.state.error && <p>{this.state.error}</p>}
-                <form onSubmit={e => this.handleAddOption(e)}>
-                    <input name="addOptionForm"></input>
-                    <button>Add Option</button>
-                </form>
-            </div>
-        )
-    }
+    render = () => (
+                        <div>
+                            {this.state.error && <p>{this.state.error}</p>}
+                            <form onSubmit={e => this.handleAddOption(e)}>
+                                <input name="addOptionForm"></input>
+                                <button>Add Option</button>
+                            </form>
+                        </div>
+                    )
 }

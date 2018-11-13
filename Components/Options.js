@@ -1,5 +1,5 @@
 import React from 'react'
-import Option from '../Components/Option'
+import Option from './Option'
 
 const Options = props => (
     <div>
