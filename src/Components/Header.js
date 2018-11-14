@@ -4,7 +4,8 @@ import React, {Component} from 'react'
 export default class Header extends Component {
     
     static defaultProps = {
-        title: 'Indecision'
+        title: 'Indecision',
+        subtitle: 'Place your life in the hands of a computer'
     }
 
     render = () => (

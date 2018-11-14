@@ -1,29 +1,18 @@
-import React, {Component} from 'react'
-import Header from '../Components/Header'
-import Action from '../Components/Action'
-import Options from '../Components/Options'
-import AddOption from '../Components/AddOptions'
-import Counter from '../Components/Counter'
+import React, { Component } from 'react'
+import Header from './Header'
+import Action from './Action'
+import Options from './Options'
+import AddOption from './AddOptions'
+import Counter from './Counter'
 
 export default class Indecision extends Component {
 
     static defaultProps = {
-        options: ['fdfdfd']
+        options: []
     }
     
     state = {
-        title: 'Indecision',
-        subtitle: 'Place your life in the hands of a computer',
         options: this.props.options
-    }
-
-    componentWillReceiveProps = (props) => {
-        console.log(props)
-    }
-
-
-    getDerivedStateFromProps = (props) => {
-        console.log(props)
     }
 
     handleAddOption = option => {
@@ -95,6 +84,7 @@ export default class Indecision extends Component {
     render = () => (
                         <div>
                             <Header 
+                                // because these are null, Header's defaultProps will kick in
                                 title={this.state.title} 
                                 subtitle={this.state.subtitle}/>
                             <Action 
@@ -111,7 +101,3 @@ export default class Indecision extends Component {
                         </div>
                     )
 }
-
-// Indecision.defaultProps = {
-//     options: []
-// }

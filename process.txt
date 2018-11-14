@@ -33,14 +33,18 @@ Adding webpack
         + designate where the bundle.js should populate (in the public folder)
     - add the '--watch' tag to the webpack build script in package.json so that it automatically watches for changes.
         + Remember, at this point you still need live-server (npm run serve) running when you run npm run build.
+    - Source Maps: 
+        + Add the line 'devtool: 'cheap-module-eval-source-map'' so that it maps errors back to it's original file, and not the bundle.js.
 
 Exporting and Importing
     - Should now be available
     - export {namedExport1, namedExport2, export3 as default} => for multiple exports
         + In the importing file, 'import export3, {namedExport1, namedExport2} from './pathToFile.js'
         + In the case of defaults, you can name them anything you want on import.
-    - for singular exports: export default functionName
+    - for singular exports: export default functionName (or React component class)
         + In the importing file, 'import functionName from './pathToFile.js'
+    - All React components ideally want to live in a 'Components' folder within the src folder, each
+        having their own file.
 
 Using Babel to incorporate (convert) JSX to React  
     - run 'npm install babel-core@6.25.0 babel-loader@7.1.1 --save'
@@ -55,3 +59,23 @@ Using Babel to incorporate (convert) JSX to React
             component.
         + This also allows you to add defaultProps or propTypes fields as 'static' properties within the class.
         + This also allows state to be defined without being called in a constructor.
+
+Using webpack-dev-server
+    - This is a replacement for live-server and the webpack --watch that we use above, and we tell it where to look for our content using its' contentBase functionality.
+        + Changes are live reloaded, speedy.
+        + You can actually also TRASH the bundle.js file in the public folder. Webpack is no longer generating content based off of that file, and is serving up content from memory not writing the physical file and serving it, which can be expensive. There is NO physical bundle file associated with this.
+    - Run 'npm install --save webpack-dev-server@2.5.1'
+    - Add the following to the webpack.config.js file:   
+        'devServer: {
+            contentBase: path.join(__dirname, 'public')
+        }'
+    - At this point, you can go into package.json and clean out some of the scripts.
+        + remove "babel"
+        + add '"dev-server": "webpack-dev-server"' as a script.
+        + You can now shut down the live-server and webpack --watch commands and run the npm run dev-server.
+
+Using props.children
+    + If you'd like to render a component / JSX with something inside, you can utilize the props.children call.
+    + This accesses any JSX you place inside the opening and closing tags of the component.
+    + <Component><p>this is a child</p></Component>
+    + Within Component definition we can place {props.children} which will render the paragraph.
