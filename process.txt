@@ -82,9 +82,9 @@ Using props.children
 
 Incorporating Styles using SCSS
     + Add a Styles folder within the 'src' folder along with any pertinent files with a '.scss' extension
-    + Add the following rule to the webpack config, which looks for any files with the scss extension: 
+    + Add the following rule to the webpack config, which looks for any files with the scss OR css extension: 
       {
-        test: /\.scss$/,
+        test: /\.s?css$/,
         use: [
             'style-loader',
             'css-loader',
@@ -101,7 +101,24 @@ Incorporating Styles using SCSS
     + You're going to be exporting / importing styles similar to what we do with React components.
         + Create a 'base' folder within Styles folder, and a partial file called '_base.scss' which means that it only will be exporting
         + Import syntax
-            At the top of each file: '@import "./path/toFile.scss";'
+            At the top of each file: '@import "./path/toFile";'
 
 SCSS Variables
     + Variables, declared at the top of the file, start with a '$' and each line ends with a ';'
+
+    + SCSS supports nested selectors, but this should be avoided in favor of class selectors.
+        + BEM: Block Element Modifier naming convention.
+
+    + A '_settings.scss' file can also live in your 'base' folder, and hold universal variables for values used continuously (colors, spacing, etc)
+        - Import at the top of the styles.scss page so that all other pages can use / inherit from.
+    
+    + SCSS reference functions: http://sass-lang.com/documentation/Sass/Script/Functions.html
+
+    Modifiers are denoted with a '.baseClass--modifier' className. 
+        - This is for when you have a modified version of a base class.
+
+CSS Resets:
+    + Used so that all users browsers start at the same point stylistically.
+        - We can use something called normalize for this.
+    + Run 'npm install --save normalize.css@7.0.0'
+    + 'import normalize.css/normalize.css' goes at the top of your app.js file.

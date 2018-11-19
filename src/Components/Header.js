@@ -9,9 +9,9 @@ export default class Header extends Component {
     }
 
     render = () => (
-        <div>
-            <h1>{this.props.title}</h1>
-            {this.props.subtitle && <h2>{this.props.subtitle}</h2>}
+        <div className="header">
+            <h1 className="header__title">{this.props.title}</h1>
+            {this.props.subtitle && <h2 className="header__subtitle">{this.props.subtitle}</h2>}
         </div>
     )
 }
