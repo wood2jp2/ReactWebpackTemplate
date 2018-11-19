@@ -79,3 +79,29 @@ Using props.children
     + This accesses any JSX you place inside the opening and closing tags of the component.
     + <Component><p>this is a child</p></Component>
     + Within Component definition we can place {props.children} which will render the paragraph.
+
+Incorporating Styles using SCSS
+    + Add a Styles folder within the 'src' folder along with any pertinent files with a '.scss' extension
+    + Add the following rule to the webpack config, which looks for any files with the scss extension: 
+      {
+        test: /\.scss$/,
+        use: [
+            'style-loader',
+            'css-loader',
+            'sass-loader'
+        ]
+      }
+    + You will need a few loaders to render scss: 
+        1. CSS Loader: Allows webpack to take and load in the css by converting it to a JavaScript representation of its' styles. 
+        2. Style Loader: Adds CSS to the DOM by injecting a <style> tag.
+        3. sass-loader: allows us to import scss files
+        4. node-sass: takes SCSS code and converts to css.
+    + Run: 'npm install style-loader@0.18.2 css-loader@0.28.4 sass-loader@6.0.6 node-sass@4.5.3 --save'
+    + You can then import style files as you would components into the app.js file.
+    + You're going to be exporting / importing styles similar to what we do with React components.
+        + Create a 'base' folder within Styles folder, and a partial file called '_base.scss' which means that it only will be exporting
+        + Import syntax
+            At the top of each file: '@import "./path/toFile.scss";'
+
+SCSS Variables
+    + Variables, declared at the top of the file, start with a '$' and each line ends with a ';'

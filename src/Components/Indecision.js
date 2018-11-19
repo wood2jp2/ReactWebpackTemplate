@@ -4,6 +4,7 @@ import Action from './Action'
 import Options from './Options'
 import AddOption from './AddOptions'
 import Counter from './Counter'
+import OptionModal from './OptionModal'
 
 export default class Indecision extends Component {
 
@@ -12,7 +13,8 @@ export default class Indecision extends Component {
     }
     
     state = {
-        options: this.props.options
+        options: this.props.options,
+        selectedOption: undefined
     }
 
     handleAddOption = option => {
@@ -33,9 +35,15 @@ export default class Indecision extends Component {
     handleDeleteOptions = () => this.setState(() => ({options: []}))
 
     handlePick = () => {
-        let randomOption = Math.floor(this.state.options.length * Math.random())
-        alert(this.state.options[randomOption])
+        let randomOptionIndex = Math.floor(this.state.options.length * Math.random())
+        this.setState(() => ({selectedOption: this.state.options[randomOptionIndex]}))
     }
+
+    clearSelectedOption = () => 
+        this.setState(() => ({
+            options: [],
+            selectedOption: undefined
+        }))
 
     // Lifecycle methods only usable on class-based components
 
@@ -49,9 +57,7 @@ export default class Indecision extends Component {
                 this.setState(() => ({options}))
             }
         }
-        catch (e) {
-
-        }
+        catch (e) {  }
     }
 
     // fires before component is rendered on page
@@ -98,6 +104,7 @@ export default class Indecision extends Component {
                             <AddOption 
                                 handleAddOption={this.handleAddOption} />
                             <Counter />
+                            <OptionModal selectedOption={this.state.selectedOption} clearSelectedOption={this.clearSelectedOption} />
                         </div>
                     )
 }
