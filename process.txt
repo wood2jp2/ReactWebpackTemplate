@@ -127,3 +127,11 @@ React-Router
     + Client-side rendering: much cheaper than server-side routing. There is a reach to the server for the first time that the browser has to render
         the page, but after that, all routing and rendering is done client-side.
     + Each route (endpoint) has an associated component / group of components to render once hit.
+    + 'npm install --save react-router-dom@4.2.2'
+    + BrowserRouter and Route should be imported. BrowserRouter is initialized once, and all pertinent routes are proclaimed inside within a <Switch>.
+        - <Route> takes a path prop and a component to render when that endpoint is hit.
+        - Switch moves through your <Route> tags in order, finds the match then stops (does not check later routes)
+        - You can then declare your very last 404 route (no path matched) at the bottom for it to default to if no route is found
+    + You'll have to add the following to the webpack config file in the devServer in order for it to default to index.html
+        - 'historyApiFallback: true'
+    + Make sure you add the 'exact' prop where needed so that you don't see 'stacking' of components of different endpoints on the same page
