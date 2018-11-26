@@ -135,3 +135,21 @@ React-Router
     + You'll have to add the following to the webpack config file in the devServer in order for it to default to index.html
         - 'historyApiFallback: true'
     + Make sure you add the 'exact' prop where needed so that you don't see 'stacking' of components of different endpoints on the same page
+
+Redux: A Global State Container
+
+    + Components have given us the illusion of reuseability even though most components rely on the props they are given to function correctly. 
+        - In order to truly be able to reuse a component, the best way would be to store the state in a neutral, non-component-based state system, which is where Redux comes in.
+        - Redux is also going to give state a place to stay accessible in applications where there is no central parent component to track a simple state.
+    + Redux also helps avoid passing props all the way down a tree, through components that do NOT need access to those props. 
+
+    Redux Store is just an {object}
+
+    + Install: 'npm install --save redux@3.7.2'
+    + import {createStore} from 'redux
+        - this instantiates your store.
+        - var store = createStore((state = { count: 0 }) => {
+            return state
+        })
+            + give it a default state value in the function so that it has something if not given anything at all
+        - store.getState()
